@@ -1,0 +1,43 @@
+@EnrollmentSystem.AuthService_HostAddress = http://localhost:5001
+
+### Health Check
+GET {{EnrollmentSystem.AuthService_HostAddress}}/health
+Accept: application/json
+
+###
+
+### Login (Student)
+POST {{EnrollmentSystem.AuthService_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "student1",
+  "password": "password123"
+}
+
+###
+
+### Login (Faculty)
+POST {{EnrollmentSystem.AuthService_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "faculty1",
+  "password": "password123"
+}
+
+###
+
+### Validate Token (Replace YOUR_TOKEN_HERE with actual token from login response)
+GET {{EnrollmentSystem.AuthService_HostAddress}}/api/auth/validate
+Authorization: Bearer YOUR_TOKEN_HERE
+Accept: application/json
+
+###
+
+### Logout (Replace YOUR_TOKEN_HERE with actual token from login response)
+POST {{EnrollmentSystem.AuthService_HostAddress}}/api/auth/logout
+Authorization: Bearer YOUR_TOKEN_HERE
+Content-Type: application/json
+
+###

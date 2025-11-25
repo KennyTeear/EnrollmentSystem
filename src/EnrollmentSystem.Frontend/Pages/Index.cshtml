@@ -1,0 +1,35 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Enrollment System</h1>
+    <p>Distributed microservices-based course enrollment platform</p>
+    
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <p>Welcome, <strong>@User.Identity.Name</strong> (@User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value)</p>
+        
+        <div class="mt-4">
+            <a asp-page="/Courses/Index" class="btn btn-primary">View Courses</a>
+            
+            @if (User.IsInRole("Student"))
+            {
+                <a asp-page="/Grades/Index" class="btn btn-secondary">My Grades</a>
+            }
+            
+            @if (User.IsInRole("Faculty"))
+            {
+                <a asp-page="/Faculty/UploadGrades" class="btn btn-success">Upload Grades</a>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="mt-4">
+            <a asp-page="/Account/Login" class="btn btn-primary">Login</a>
+        </div>
+    }
+</div>

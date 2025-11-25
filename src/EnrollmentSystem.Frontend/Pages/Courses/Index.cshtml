@@ -1,0 +1,45 @@
+@page
+@model EnrollmentSystem.Frontend.Pages.Courses.IndexModel
+@{
+    ViewData["Title"] = "Available Courses";
+}
+
+<h2>Available Courses</h2>
+
+@if (Model.ServiceUnavailable)
+{
+    <div class="alert alert-warning">
+        <strong>Course service is currently unavailable.</strong> Please try again later.
+    </div>
+}
+else if (Model.Courses != null && Model.Courses.Any())
+{
+    <div class="row">
+        @foreach (var course in Model.Courses)
+        {
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@course.Code - @course.Name</h5>
+                        <p class="card-text">@course.Description</p>
+                        <p class="mb-1"><strong>Instructor:</strong> @course.Instructor</p>
+                        <p class="mb-1"><strong>Capacity:</strong> @course.EnrolledStudents / @course.MaxStudents</p>
+                        
+                        @if (User.IsInRole("Student"))
+                        {
+                            <form method="post" asp-page-handler="Enroll" asp-route-courseId="@course.Id">
+                                <button type="submit" class="btn btn-primary" disabled="@(!course.IsOpen || course.EnrolledStudents >= course.MaxStudents)">
+                                    @(course.IsOpen && course.EnrolledStudents < course.MaxStudents ? "Enroll" : "Full")
+                                </button>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No courses available at this time.</p>
+}

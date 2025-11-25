@@ -1,0 +1,46 @@
+@EnrollmentSystem.CourseService_HostAddress = http://localhost:5002
+@token = YOUR_TOKEN_HERE
+
+### Health Check
+GET {{EnrollmentSystem.CourseService_HostAddress}}/health
+Accept: application/json
+
+###
+
+### Get All Courses
+GET {{EnrollmentSystem.CourseService_HostAddress}}/api/courses
+Authorization: Bearer {{token}}
+Accept: application/json
+
+###
+
+### Get Course by ID
+GET {{EnrollmentSystem.CourseService_HostAddress}}/api/courses/1
+Authorization: Bearer {{token}}
+Accept: application/json
+
+###
+
+### Get Student's Enrolled Courses (Replace 1 with actual student ID)
+GET {{EnrollmentSystem.CourseService_HostAddress}}/api/courses/student/1
+Authorization: Bearer {{token}}
+Accept: application/json
+
+###
+
+### Enroll in Course
+POST {{EnrollmentSystem.CourseService_HostAddress}}/api/courses/enroll
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "studentId": 1,
+  "courseId": 1
+}
+
+###
+
+````````
+
+
+# Response

@@ -1,0 +1,46 @@
+@page
+@model EnrollmentSystem.Frontend.Pages.Grades.IndexModel
+@{
+    ViewData["Title"] = "My Grades";
+}
+
+<h2>My Grades</h2>
+
+@if (Model.ServiceUnavailable)
+{
+    <div class="alert alert-warning">
+        <strong>Grade service is currently unavailable.</strong> Please try again later.
+    </div>
+}
+else if (Model.Grades != null && Model.Grades.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Course Code</th>
+                <th>Course Name</th>
+                <th>Numeric Grade</th>
+                <th>Letter Grade</th>
+                <th>Semester</th>
+                <th>Date Posted</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var grade in Model.Grades)
+            {
+                <tr>
+                    <td>@grade.CourseCode</td>
+                    <td>@grade.CourseName</td>
+                    <td>@grade.NumericGrade</td>
+                    <td>@grade.LetterGrade</td>
+                    <td>@grade.Semester</td>
+                    <td>@grade.DatePosted?.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No grades available yet.</p>
+}

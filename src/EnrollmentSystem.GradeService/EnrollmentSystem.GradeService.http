@@ -1,0 +1,36 @@
+@EnrollmentSystem.GradeService_HostAddress = http://localhost:5003
+@token = YOUR_TOKEN_HERE
+
+### Health Check
+GET {{EnrollmentSystem.GradeService_HostAddress}}/health
+Accept: application/json
+
+###
+
+### Get Student Grades (Replace 1 with actual student ID)
+GET {{EnrollmentSystem.GradeService_HostAddress}}/api/grades/student/1
+Authorization: Bearer {{token}}
+Accept: application/json
+
+###
+
+### Get Course Grades (Faculty only - Replace 1 with actual course ID)
+GET {{EnrollmentSystem.GradeService_HostAddress}}/api/grades/course/1
+Authorization: Bearer {{token}}
+Accept: application/json
+
+###
+
+### Upload Grade (Faculty only)
+POST {{EnrollmentSystem.GradeService_HostAddress}}/api/grades/upload
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "studentId": 1,
+  "courseId": 1,
+  "numericGrade": 95.5,
+  "letterGrade": "A"
+}
+
+###

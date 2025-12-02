@@ -1,6 +1,6 @@
-# ?? Quick Start Guide - Enrollment System
+# Quick Start Guide - Enrollment System
 
-## ? Database Setup Complete!
+##  Database Setup Complete!
 
 All three databases have been successfully created with LocalDB:
 
@@ -10,7 +10,7 @@ All three databases have been successfully created with LocalDB:
 | **EnrollmentCourses** | Courses, Enrollments | ? 3 sample courses |
 | **EnrollmentGrades** | Grades | ? Empty (ready for data) |
 
-## ?? Test Accounts
+##  Test Accounts
 
 ### Student Account
 - **Username:** `student1`
@@ -24,7 +24,7 @@ All three databases have been successfully created with LocalDB:
 - **Email:** faculty1@university.edu
 - **Capabilities:** Upload grades, view course grades
 
-## ?? Sample Courses Available
+##  Sample Courses Available
 
 1. **CS101 - Introduction to Programming**
    - Instructor: Dr. Smith
@@ -41,7 +41,7 @@ All three databases have been successfully created with LocalDB:
    - Capacity: 20 students
    - Status: Open for enrollment
 
-## ?? How to Start the System
+##  How to Start the System
 
 ### Option 1: Manual Start (4 Terminals)
 
@@ -78,7 +78,7 @@ Run the included script:
 
 This will automatically start all 4 services in separate windows.
 
-## ?? Access the Application
+##  Access the Application
 
 Once all services are running:
 
@@ -99,7 +99,7 @@ Once all services are running:
 - **Grade:** http://localhost:5003/health
 - **Frontend:** http://localhost:5176/health
 
-## ?? Quick Test Workflow
+##  Quick Test Workflow
 
 ### 1. Login as Student
 1. Go to http://localhost:5176
@@ -131,7 +131,7 @@ Once all services are running:
 2. Click "My Grades"
 3. View the uploaded grades
 
-## ?? Testing with .http Files
+##  Testing with .http Files
 
 Visual Studio has built-in `.http` file support:
 
@@ -165,7 +165,7 @@ Open `src\EnrollmentSystem.GradeService\EnrollmentSystem.GradeService.http`
 
 Same process - replace token and test endpoints.
 
-## ?? Troubleshooting
+##  Troubleshooting
 
 ### Database Connection Issues
 ```powershell
@@ -233,11 +233,11 @@ USE EnrollmentGrades;
 SELECT * FROM Grades;
 ```
 
-## ?? Demo Scenarios
+##  Demo Scenarios
 
 ### Scenario 1: Student Enrollment Flow
 1. Login as student1
-2. Browse courses ? CS101
+2. Browse courses 
 3. Click "Enroll"
 4. View "My Grades" (empty initially)
 
@@ -251,12 +251,12 @@ SELECT * FROM Grades;
 1. Start all services
 2. Login as student1
 3. Stop Course Service (Ctrl+C in terminal)
-4. Try to view courses ? See "Service Unavailable" message
-5. Try to view grades ? Still works! (Different service)
+4. Try to view courses 
+5. Try to view grades 
 6. Restart Course Service
-7. Refresh courses page ? Works again!
+7. Refresh courses page 
 
-## ?? Additional Resources
+##  Additional Resources
 
 - **Swagger UI** - Interactive API testing
 - **.http Files** - Quick endpoint testing
@@ -265,6 +265,3 @@ SELECT * FROM Grades;
 
 ---
 
-## ? You're All Set!
-
-Your distributed enrollment system is ready to run. Start the services and begin testing! ??

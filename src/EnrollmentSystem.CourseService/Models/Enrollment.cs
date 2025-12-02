@@ -8,4 +8,5 @@ public class Enrollment
     public int StudentId { get; set; }
     public int CourseId { get; set; }
     public DateTime EnrolledAt { get; set; } = DateTime.UtcNow;
+    public Course? Course { get; set; }
 }

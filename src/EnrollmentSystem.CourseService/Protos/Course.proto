@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+option csharp_namespace = "EnrollmentSystem.CourseService.Grpc";
+
+service CourseGrpc {
+  rpc GetAllCourses (Empty) returns (CourseListReply);
+  rpc GetCourseById (CourseByIdRequest) returns (CourseReply);
+  rpc EnrollInCourse (EnrollRequest) returns (EnrollReply);
+  rpc GetStudentCourses (StudentCoursesRequest) returns (CourseListReply);
+}
+
+message Empty {}
+
+message CourseByIdRequest {
+  int32 courseId = 1;
+}
+
+message CourseReply {
+  int32 id = 1;
+  string code = 2;
+  string name = 3;
+  string description = 4;
+  int32 maxStudents = 5;
+  bool isOpen = 6;
+  string instructor = 7;
+}
+
+message CourseListReply {
+  repeated CourseReply courses = 1;
+}
+
+message EnrollRequest {
+  int32 studentId = 1;
+  int32 courseId = 2;
+}
+
+message EnrollReply {
+  bool success = 1;
+  string error = 2;
+}
+
+message StudentCoursesRequest {
+  int32 studentId = 1;
+}

@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option csharp_namespace = "EnrollmentSystem.AuthService.Grpc";
+
+service AuthGrpc {
+  rpc Login (LoginRequest) returns (LoginReply);
+}
+
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message LoginReply {
+  string token = 1;
+  string error = 2;
+}

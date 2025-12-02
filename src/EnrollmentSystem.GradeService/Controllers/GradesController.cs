@@ -52,34 +52,47 @@ public class GradesController : ControllerBase
     [Authorize(Roles = "Faculty")]
     public async Task<IActionResult> UploadGrade([FromBody] UploadGradeRequest request)
     {
-        // Check if grade already exists
-        var existingGrade = await _context.Grades
-            .FirstOrDefaultAsync(g => g.StudentId == request.StudentId && g.CourseId == request.CourseId);
+        try
+        {
+            // Set default course info (you can improve this by calling Course Service)
+            var courseName = $"Course {request.CourseId}";
+            var courseCode = $"COURSE{request.CourseId}";
 
-        if (existingGrade != null)
-        {
-            // Update existing grade
-            existingGrade.NumericGrade = request.NumericGrade;
-            existingGrade.LetterGrade = request.LetterGrade;
-            existingGrade.DatePosted = DateTime.UtcNow;
-        }
-        else
-        {
-            // Create new grade
-            var grade = new Grade
+            // Check if grade already exists
+            var existingGrade = await _context.Grades
+                .FirstOrDefaultAsync(g => g.StudentId == request.StudentId && g.CourseId == request.CourseId);
+
+            if (existingGrade != null)
             {
-                StudentId = request.StudentId,
-                CourseId = request.CourseId,
-                NumericGrade = request.NumericGrade,
-                LetterGrade = request.LetterGrade,
-                Semester = "Fall 2024" // Could be parameterized
-            };
+                // Update existing grade
+                existingGrade.NumericGrade = request.NumericGrade;
+                existingGrade.LetterGrade = request.LetterGrade;
+                existingGrade.DatePosted = DateTime.UtcNow;
+            }
+            else
+            {
+                // Create new grade
+                var grade = new Grade
+                {
+                    StudentId = request.StudentId,
+                    CourseId = request.CourseId,
+                    CourseName = courseName,
+                    CourseCode = courseCode,
+                    NumericGrade = request.NumericGrade,
+                    LetterGrade = request.LetterGrade,
+                    Semester = "Fall 2024"
+                };
 
-            _context.Grades.Add(grade);
+                _context.Grades.Add(grade);
+            }
+
+            await _context.SaveChangesAsync();
+            return Ok(new { message = "Grade uploaded successfully" });
         }
-
-        await _context.SaveChangesAsync();
-        return Ok(new { message = "Grade uploaded successfully" });
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = "Failed to upload grade", error = ex.Message });
+        }
     }
 
     [HttpGet("course/{courseId}")]

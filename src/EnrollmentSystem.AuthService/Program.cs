@@ -15,6 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddGrpc();
 
 // Database
 builder.Services.AddDbContext<AuthDbContext>(options =>
@@ -73,5 +74,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health");
+app.MapGrpcService<AuthGrpcService>(); // gRPC endpoint
 
 app.Run();

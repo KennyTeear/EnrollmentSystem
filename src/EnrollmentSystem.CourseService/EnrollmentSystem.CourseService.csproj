@@ -24,7 +24,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\EnrollmentSystem.GradeService\EnrollmentSystem.GradeService.csproj" />
 		<ProjectReference Include="..\EnrollmentSystem.Shared\EnrollmentSystem.Shared.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<Protobuf Include="Protos\\Course.proto" GrpcServices="Server" />
+	</ItemGroup>
 </Project>

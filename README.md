@@ -1,8 +1,8 @@
-# ?? Enrollment System - Distributed Microservices Application
+# Enrollment System - Distributed Microservices Application
 
 A distributed online enrollment system built with .NET 8, demonstrating microservices architecture, fault tolerance, and JWT authentication.
 
-## ?? Project Overview
+##  Project Overview
 
 This system implements a **distributed microservices architecture** for university enrollment management:
 - **4 independent services** running on separate nodes (ports)
@@ -10,16 +10,16 @@ This system implements a **distributed microservices architecture** for universi
 - **JWT token authentication** with session tracking
 - **Fault-tolerant design** with retry and circuit breaker patterns
 
-## ? Features
+## Features
 
-### Core Requirements ?
+### Core Requirements 
 1. ?? **Login/Logout** - JWT authentication with token refresh
 2. ?? **View Available Courses** - Browse course catalog with real-time capacity
 3. ?? **Student Enrollment** - Enroll in courses with validation
 4. ?? **View Grades** - Students view their academic history
 5. ????? **Faculty Grade Upload** - Role-based grade management
 
-### Technical Features ???
+### Technical Features 
 - **Microservices Architecture** - Independent, scalable services
 - **Distributed Databases** - SQL Server LocalDB per service
 - **Health Checks** - Monitor service availability
@@ -28,7 +28,7 @@ This system implements a **distributed microservices architecture** for universi
 - **CORS Support** - Cross-origin resource sharing
 - **Graceful Degradation** - Services fail independently
 
-## ??? Architecture
+## Architecture
 
 ```
 ???????????????????????????????????????????????????????????
@@ -50,20 +50,20 @@ This system implements a **distributed microservices architecture** for universi
          ???????????? ???????????? ????????????
 ```
 
-## ?? Quick Start
+## Quick Start
 
 ### Prerequisites
 - ? .NET 8 SDK
 - ? SQL Server LocalDB (included with Visual Studio)
 - ? Visual Studio 2022 or VS Code
 
-### 1?? Database Setup (Already Done! ?)
+### 1Database Setup (Already Done! ?)
 Databases are already created with sample data:
 - `EnrollmentAuth` - 2 test users
 - `EnrollmentCourses` - 3 sample courses
 - `EnrollmentGrades` - Ready for data
 
-### 2?? Start All Services
+### 2 Start All Services
 
 **Option A: PowerShell Script (Easiest)**
 ```powershell
@@ -89,11 +89,11 @@ cd src\EnrollmentSystem.Frontend
 dotnet run
 ```
 
-### 3?? Access the Application
+### 3 Access the Application
 - **Web App:** http://localhost:5176
 - **Login:** `student1` / `password123`
 
-## ?? Documentation
+## Documentation
 
 - **[QUICK_START.md](QUICK_START.md)** - Detailed setup and testing guide
 - **Swagger UI:**
@@ -101,7 +101,7 @@ dotnet run
   - Course API: http://localhost:5002/swagger
   - Grade API: http://localhost:5003/swagger
 
-## ?? Testing
+## Testing
 
 ### Test Accounts
 | Role | Username | Password |
@@ -140,8 +140,7 @@ dotnet run
 5. Verify full functionality restored
 ```
 
-## ?? Technology Stack
-
+##  Technology Stack
 ### Backend Services
 - **Framework:** ASP.NET Core 8.0
 - **Authentication:** JWT Bearer Tokens
@@ -160,7 +159,7 @@ dotnet run
 - **API Testing:** .http files (REST Client)
 - **Logging:** Built-in ASP.NET Core logging
 
-## ?? Project Structure
+##  Project Structure
 
 ```
 EnrollmentSystem/
@@ -195,7 +194,7 @@ EnrollmentSystem/
 ? README.md                              # This file
 ```
 
-## ?? Security Features
+## Security Features
 
 - **JWT Authentication** - Stateless token-based auth
 - **Role-Based Authorization** - Student vs Faculty permissions
@@ -204,7 +203,7 @@ EnrollmentSystem/
 - **CORS Policy** - Controlled cross-origin access
 - **Token Expiration** - 60-minute token lifetime
 
-## ??? Fault Tolerance
+## Fault Tolerance
 
 The system demonstrates fault tolerance through:
 
@@ -215,12 +214,12 @@ The system demonstrates fault tolerance through:
 5. **Health Checks** - Monitor and report service status
 
 ### Example: Course Service Down
-- ? Cannot view or enroll in courses
-- ? Can still login/logout (Auth Service)
-- ? Can still view grades (Grade Service)
-- ? Frontend shows "Service Unavailable" message
+-  Cannot view or enroll in courses
+-  Can still login/logout (Auth Service)
+-  Can still view grades (Grade Service)
+-  Frontend shows "Service Unavailable" message
 
-## ?? Database Schema
+##  Database Schema
 
 ### EnrollmentAuth
 ```sql
@@ -279,7 +278,7 @@ All services use `appsettings.json` for configuration:
 }
 ```
 
-## ?? Troubleshooting
+##  Troubleshooting
 
 ### Database Connection Failed
 ```powershell
@@ -300,34 +299,34 @@ dotnet clean
 dotnet build
 ```
 
-## ?? Academic Requirements Met
+##  Academic Requirements Met
 
 ### Distributed Systems Concepts
-? **Multiple Nodes** - 4 independent services  
-? **Fault Tolerance** - Services fail independently  
-? **Session Management** - JWT tokens across nodes  
-? **Distributed Data** - 3 separate databases  
-? **Inter-Service Communication** - HTTP/REST  
-? **Load Distribution** - Independent service scaling  
+**Multiple Nodes** - 4 independent services  
+**Fault Tolerance** - Services fail independently  
+**Session Management** - JWT tokens across nodes  
+**Distributed Data** - 3 separate databases  
+**Inter-Service Communication** - HTTP/REST  
+**Load Distribution** - Independent service scaling  
 
 ### Bonus Features
-? **Redundant Persistence** - Separate DB per service  
-? **Health Monitoring** - Health check endpoints  
-? **API Documentation** - Swagger/OpenAPI  
-? **Resilience Patterns** - Retry & Circuit Breaker  
+**Redundant Persistence** - Separate DB per service  
+**Health Monitoring** - Health check endpoints  
+**API Documentation** - Swagger/OpenAPI  
+**Resilience Patterns** - Retry & Circuit Breaker  
 
-## ?? License
+## License
 
 This project is for educational purposes as part of a distributed systems course.
 
-## ?? Contributors
+## Contributors
 
 Developed as a course project demonstrating microservices architecture and distributed systems concepts.
 
 ---
 
-## ?? You're Ready to Go!
+## You're Ready to Go!
 
-Run `.\start-all-services.ps1` and start testing! ??
+Run `.\start-all-services.ps1` and start testing! 
 
 For detailed testing instructions, see **[QUICK_START.md](QUICK_START.md)**

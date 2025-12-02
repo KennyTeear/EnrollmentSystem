@@ -18,7 +18,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 	ProjectSection(SolutionItems) = preProject
 		QUICK_START.md = QUICK_START.md
 		README.md = README.md
-		START_HERE.md = START_HERE.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{6DF9E62F-B8B1-4D4E-9C8A-1234567890AB}"

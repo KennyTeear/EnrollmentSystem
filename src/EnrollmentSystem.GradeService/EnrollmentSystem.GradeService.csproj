@@ -27,4 +27,7 @@
     <ProjectReference Include="..\EnrollmentSystem.Shared\EnrollmentSystem.Shared.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Protobuf Include="Protos\Grade.proto" GrpcServices="Server" />
+	</ItemGroup>
 </Project>

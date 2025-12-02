@@ -1,4 +1,5 @@
 using EnrollmentSystem.CourseService.Data;
+using EnrollmentSystem.CourseService.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -10,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddGrpc();
 
 // Database
 builder.Services.AddDbContext<CourseDbContext>(options =>
@@ -66,5 +68,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health");
+app.MapGrpcService<CourseGrpcService>();
 
 app.Run();

@@ -1,4 +1,5 @@
 using EnrollmentSystem.GradeService.Data;
+using EnrollmentSystem.GradeService.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddGrpc();
 
 // Database
 builder.Services.AddDbContext<GradeDbContext>(options =>
@@ -67,5 +69,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health");
+app.MapGrpcService<GradeGrpcService>();
 
 app.Run();

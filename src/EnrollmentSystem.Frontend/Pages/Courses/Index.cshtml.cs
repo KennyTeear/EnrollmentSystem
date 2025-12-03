@@ -25,7 +25,6 @@ public class IndexModel : PageModel
 
     public async Task OnGetAsync()
     {
-        await Response.WriteAsync("<script>console.log('Waht');</script>");
         try
         {
             var token = User.FindFirst("AccessToken")?.Value;
@@ -41,10 +40,7 @@ public class IndexModel : PageModel
         }
         catch
         {
-            await Response.WriteAsync("<script>console.log('Hello Error');</script>");
-            //System.Diagnostics.Debug.WriteLine("Checking");
-            //Response.Redirect("/Index", true);
-            //return;
+            ServiceUnavailable = true;
         }
             
     }

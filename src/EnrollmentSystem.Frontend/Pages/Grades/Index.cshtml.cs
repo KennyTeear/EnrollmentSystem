@@ -40,8 +40,7 @@ public class IndexModel : PageModel
         }
         catch
         {
-            Response.Redirect("/Index", true);
-            return;
+            ServiceUnavailable = true;
         }
             
     }

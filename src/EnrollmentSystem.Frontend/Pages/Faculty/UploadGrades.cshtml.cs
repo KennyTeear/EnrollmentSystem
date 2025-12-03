@@ -56,8 +56,7 @@ public class UploadGradesModel : PageModel
         }
         catch
         {
-            Response.Redirect("/Index", true);
-            return;
+            Message = "Something went wrong. Try again later.";
         }
             
     }

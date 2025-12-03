@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace EnrollmentSystem.Frontend.Pages.Courses;
 
@@ -24,15 +25,28 @@ public class IndexModel : PageModel
 
     public async Task OnGetAsync()
     {
-        var token = User.FindFirst("AccessToken")?.Value;
-        if (string.IsNullOrEmpty(token))
+        await Response.WriteAsync("<script>console.log('Waht');</script>");
+        try
         {
-            ServiceUnavailable = true;
-            return;
-        }
+            var token = User.FindFirst("AccessToken")?.Value;
+            //await Response.WriteAsync("<script>console.log('Hello World');</script>");
+            if (string.IsNullOrEmpty(token))
+            {
+                ServiceUnavailable = true;
+                return;
+            }
 
-        Courses = await _courseService.GetCoursesAsync(token);
-        ServiceUnavailable = Courses == null;
+            Courses = await _courseService.GetCoursesAsync(token);
+            ServiceUnavailable = Courses == null;
+        }
+        catch
+        {
+            await Response.WriteAsync("<script>console.log('Hello Error');</script>");
+            //System.Diagnostics.Debug.WriteLine("Checking");
+            //Response.Redirect("/Index", true);
+            //return;
+        }
+            
     }
 
     public async Task<IActionResult> OnPostEnrollAsync(int courseId)

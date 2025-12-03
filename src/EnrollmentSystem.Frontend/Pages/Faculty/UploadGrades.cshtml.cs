@@ -45,46 +45,65 @@ public class UploadGradesModel : PageModel
 
     public async Task OnGetAsync()
     {
-        var token = User.FindFirst("AccessToken")?.Value ?? "";
-        if (!string.IsNullOrEmpty(token))
+        try
         {
-            var courses = await _courseService.GetCoursesAsync(token);
-            Courses = courses?.ToList() ?? new List<CourseDto>();
+            var token = User.FindFirst("AccessToken")?.Value ?? "";
+            if (!string.IsNullOrEmpty(token))
+            {
+                var courses = await _courseService.GetCoursesAsync(token);
+                Courses = courses?.ToList() ?? new List<CourseDto>();
+            }
         }
+        catch
+        {
+            Response.Redirect("/Index", true);
+            return;
+        }
+            
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!ModelState.IsValid)
+        try
         {
+            if (!ModelState.IsValid)
+            {
+                await OnGetAsync();
+                return Page();
+            }
+
+            var token = User.FindFirst("AccessToken")?.Value ?? "";
+
+            var request = new UploadGradeRequest
+            {
+                StudentId = Input.StudentId,
+                CourseId = Input.CourseId,
+                NumericGrade = Input.NumericGrade,
+                LetterGrade = Input.LetterGrade
+            };
+
+            var success = await _gradeService.UploadGradeAsync(request, token);
+
+            if (success)
+            {
+                Message = "Grade uploaded successfully!";
+                ModelState.Clear();
+                Input = new InputModel();
+            }
+            else
+            {
+                Message = "Failed to upload grade. Please try again.";
+            }
+
             await OnGetAsync();
             return Page();
         }
-
-        var token = User.FindFirst("AccessToken")?.Value ?? "";
-        
-        var request = new UploadGradeRequest
+        catch
         {
-            StudentId = Input.StudentId,
-            CourseId = Input.CourseId,
-            NumericGrade = Input.NumericGrade,
-            LetterGrade = Input.LetterGrade
-        };
+            Message = "Something went wrong. Try again later.";
 
-        var success = await _gradeService.UploadGradeAsync(request, token);
-
-        if (success)
-        {
-            Message = "Grade uploaded successfully!";
-            ModelState.Clear();
-            Input = new InputModel();
+            return Page();
         }
-        else
-        {
-            Message = "Failed to upload grade. Please try again.";
-        }
-
-        await OnGetAsync();
-        return Page();
+            
     }
 }

@@ -49,36 +49,45 @@ public class LoginModel : PageModel
             Password = Input.Password
         };
 
-        var response = await _authService.LoginAsync(request);
-
-        if (!response.Success)
+        try
         {
-            ErrorMessage = response.Message;
+            var response = await _authService.LoginAsync(request);
+
+            if (!response.Success)
+            {
+                ErrorMessage = response.Message;
+                return Page();
+            }
+
+            // Create claims
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, response.User!.Id.ToString()),
+                new Claim(ClaimTypes.Name, response.User.Username),
+                new Claim(ClaimTypes.Email, response.User.Email),
+                new Claim(ClaimTypes.Role, response.User.Role),
+                new Claim("AccessToken", response.Token)
+            };
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = true,
+                ExpiresUtc = DateTimeOffset.UtcNow.AddHours(1)
+            };
+
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                authProperties);
+
+            return RedirectToPage("/Index");
+        }
+        catch
+        {
+            ErrorMessage = "Can't login in right now. Please try again later.";
             return Page();
         }
-
-        // Create claims
-        var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, response.User!.Id.ToString()),
-            new Claim(ClaimTypes.Name, response.User.Username),
-            new Claim(ClaimTypes.Email, response.User.Email),
-            new Claim(ClaimTypes.Role, response.User.Role),
-            new Claim("AccessToken", response.Token)
-        };
-
-        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        var authProperties = new AuthenticationProperties
-        {
-            IsPersistent = true,
-            ExpiresUtc = DateTimeOffset.UtcNow.AddHours(1)
-        };
-
-        await HttpContext.SignInAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme,
-            new ClaimsPrincipal(claimsIdentity),
-            authProperties);
-
-        return RedirectToPage("/Index");
+            
     }
 }

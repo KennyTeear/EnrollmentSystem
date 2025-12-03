@@ -23,17 +23,25 @@ public class IndexModel : PageModel
 
     public async Task OnGetAsync()
     {
-        var token = User.FindFirst("AccessToken")?.Value;
-        var studentIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        try
+        {
+            var token = User.FindFirst("AccessToken")?.Value;
+            var studentIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-        if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(studentIdClaim))
+            if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(studentIdClaim))
+            {
+                ServiceUnavailable = true;
+                return;
+            }
+
+            var studentId = int.Parse(studentIdClaim);
+            Grades = await _gradeService.GetStudentGradesAsync(studentId, token);
+            ServiceUnavailable = Grades == null;
+        }
+        catch
         {
             ServiceUnavailable = true;
-            return;
         }
-
-        var studentId = int.Parse(studentIdClaim);
-        Grades = await _gradeService.GetStudentGradesAsync(studentId, token);
-        ServiceUnavailable = Grades == null;
+            
     }
 }

@@ -27,6 +27,8 @@ public class UploadGradesModel : PageModel
 
     public string? Message { get; set; }
 
+    public bool ServiceAvailable { get; set; }
+
     public class InputModel
     {
         [Required]
@@ -52,11 +54,17 @@ public class UploadGradesModel : PageModel
             {
                 var courses = await _courseService.GetCoursesAsync(token);
                 Courses = courses?.ToList() ?? new List<CourseDto>();
+                ServiceAvailable = true;
+            }
+            else
+            {
+                ServiceAvailable = false;
             }
         }
         catch
         {
-            Message = "Something went wrong. Try again later.";
+            Message = "This service is currently unavailable. Please try again later.";
+            ServiceAvailable = false;
         }
             
     }
@@ -100,9 +108,8 @@ public class UploadGradesModel : PageModel
         catch
         {
             Message = "Something went wrong. Try again later.";
-
+            ServiceAvailable = false;
             return Page();
         }
-            
     }
 }

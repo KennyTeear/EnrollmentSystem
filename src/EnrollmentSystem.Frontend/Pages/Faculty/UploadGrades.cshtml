@@ -13,93 +13,97 @@
     </div>
 }
 
-<form method="post">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="mb-3">
-                <label asp-for="Input.CourseId" class="form-label">Course</label>
-                <select asp-for="Input.CourseId" class="form-select">
-                    <option value="">Select a course</option>
-                    @foreach (var course in Model.Courses)
-                    {
-                        <option value="@course.Id">@course.Code - @course.Name</option>
-                    }
-                </select>
-                <span asp-validation-for="Input.CourseId" class="text-danger"></span>
-            </div>
-
-            <div class="mb-3">
-                <label asp-for="Input.StudentId" class="form-label">Student ID</label>
-                <input asp-for="Input.StudentId" class="form-control" type="number" />
-                <span asp-validation-for="Input.StudentId" class="text-danger"></span>
-                <small class="form-text text-muted">Use Student ID 1 for testing (student1 account)</small>
-            </div>
-
-            <div class="mb-3">
-                <label asp-for="Input.NumericGrade" class="form-label">Numeric Grade (0-100)</label>
-                <input asp-for="Input.NumericGrade" class="form-control" type="number" step="0.01" min="0" max="100" />
-                <span asp-validation-for="Input.NumericGrade" class="text-danger"></span>
-            </div>
-
-            <div class="mb-3">
-                <label asp-for="Input.LetterGrade" class="form-label">Letter Grade</label>
-                <select asp-for="Input.LetterGrade" class="form-select">
-                    <option value="">Select letter grade</option>
-                    <option value="A">A (90-100)</option>
-                    <option value="B">B (80-89)</option>
-                    <option value="C">C (70-79)</option>
-                    <option value="D">D (60-69)</option>
-                    <option value="F">F (0-59)</option>
-                </select>
-                <span asp-validation-for="Input.LetterGrade" class="text-danger"></span>
-            </div>
-
-            <button type="submit" class="btn btn-success">Upload Grade</button>
-            <a asp-page="/Index" class="btn btn-secondary">Back to Home</a>
-        </div>
-        
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Available Courses</h5>
+@if (Model.ServiceAvailable)
+{
+    <form method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label asp-for="Input.CourseId" class="form-label">Course</label>
+                    <select asp-for="Input.CourseId" class="form-select">
+                        <option value="">Select a course</option>
+                        @foreach (var course in Model.Courses)
+                        {
+                            <option value="@course.Id">@course.Code - @course.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="Input.CourseId" class="text-danger"></span>
                 </div>
-                <div class="card-body">
-                    @if (Model.Courses.Any())
-                    {
-                        <ul class="list-group list-group-flush">
-                            @foreach (var course in Model.Courses)
-                            {
-                                <li class="list-group-item d-flex justify-content-between">
-                                    <span><strong>@course.Code</strong> - @course.Name</span>
-                                    <small class="text-muted">ID: @course.Id</small>
-                                </li>
-                            }
+
+                <div class="mb-3">
+                    <label asp-for="Input.StudentId" class="form-label">Student ID</label>
+                    <input asp-for="Input.StudentId" class="form-control" type="number" />
+                    <span asp-validation-for="Input.StudentId" class="text-danger"></span>
+                    <small class="form-text text-muted">Use Student ID 1 for testing (student1 account)</small>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Input.NumericGrade" class="form-label">Numeric Grade (0-100)</label>
+                    <input asp-for="Input.NumericGrade" class="form-control" type="number" step="0.01" min="0" max="100" />
+                    <span asp-validation-for="Input.NumericGrade" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Input.LetterGrade" class="form-label">Letter Grade</label>
+                    <select asp-for="Input.LetterGrade" class="form-select">
+                        <option value="">Select letter grade</option>
+                        <option value="A">A (90-100)</option>
+                        <option value="B">B (80-89)</option>
+                        <option value="C">C (70-79)</option>
+                        <option value="D">D (60-69)</option>
+                        <option value="F">F (0-59)</option>
+                    </select>
+                    <span asp-validation-for="Input.LetterGrade" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-success">Upload Grade</button>
+                <a asp-page="/Index" class="btn btn-secondary">Back to Home</a>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Available Courses</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.Courses.Any())
+                        {
+                            <ul class="list-group list-group-flush">
+                                @foreach (var course in Model.Courses)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span><strong>@course.Code</strong> - @course.Name</span>
+                                        <small class="text-muted">ID: @course.Id</small>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="text-muted">No courses available.</p>
+                        }
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5>Quick Test</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>For Testing:</strong></p>
+                        <ul>
+                            <li>Student ID: <code>1</code> (student1)</li>
+                            <li>Choose any course from the list</li>
+                            <li>Enter a grade between 0-100</li>
+                            <li>Select corresponding letter grade</li>
                         </ul>
-                    }
-                    else
-                    {
-                        <p class="text-muted">No courses available.</p>
-                    }
-                </div>
-            </div>
-            
-            <div class="card mt-3">
-                <div class="card-header">
-                    <h5>Quick Test</h5>
-                </div>
-                <div class="card-body">
-                    <p><strong>For Testing:</strong></p>
-                    <ul>
-                        <li>Student ID: <code>1</code> (student1)</li>
-                        <li>Choose any course from the list</li>
-                        <li>Enter a grade between 0-100</li>
-                        <li>Select corresponding letter grade</li>
-                    </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
+}
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

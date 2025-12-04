@@ -47,21 +47,31 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnPostEnrollAsync(int courseId)
     {
-        var token = User.FindFirst("AccessToken")?.Value;
-        var studentIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-        if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(studentIdClaim))
+        try
         {
+            var token = User.FindFirst("AccessToken")?.Value;
+            var studentIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(studentIdClaim))
+            {
+                return RedirectToPage();
+            }
+
+            var request = new EnrollmentRequest
+            {
+                StudentId = int.Parse(studentIdClaim),
+                CourseId = courseId
+            };
+
+            await _courseService.EnrollInCourseAsync(request, token);
             return RedirectToPage();
         }
-
-        var request = new EnrollmentRequest
+        catch
         {
-            StudentId = int.Parse(studentIdClaim),
-            CourseId = courseId
-        };
+            ServiceUnavailable = true;
 
-        await _courseService.EnrollInCourseAsync(request, token);
-        return RedirectToPage();
+            return RedirectToPage();
+        }
+            
     }
 }
